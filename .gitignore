@@ -1,2 +1,5 @@
 node_modules
 *.nedb
+users.json
+whoami.json
+sendto.json
