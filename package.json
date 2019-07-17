@@ -1,7 +1,7 @@
 {
-  "name": "zazu-template",
-  "version": "1.0.0",
-  "description": "Zazu Template for starting your own plugin.",
+  "name": "goodos",
+  "version": "0.0.1",
+  "description": "Goodos plugin for zazu",
   "main": "zazu.js",
   "scripts": {
     "lint": "eslint .",
@@ -15,5 +15,8 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-standard": "^2.0.1",
     "mocha": "^2.5.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.0"
   }
 }

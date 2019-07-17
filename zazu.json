@@ -1,45 +1,78 @@
 {
-  "name": "zazu-template",
-  "version": "1.0.0",
-  "description": "Zazu Template for starting your own plugin.",
-  "blocks": {
-    "input": [
-      {
-        "id": "template",
-        "type": "Keyword",
-        "keyword": "template",
-        "title": "Zazu Template",
-        "subtitle": "Goto Zazu Template GitHub Repo",
-        "icon": "fa-files-o",
-        "connections": [
-          "GoHome"
+    "name": "zazu-goodos",
+    "version": "0.0.1",
+    "description": "Zazu Template for starting your own plugin.",
+    "blocks": {
+        "external": [
+            {
+                "id": "cache-users",
+                "type": "ServiceScript",
+                "script": "src/sync-slack.js",
+                "interval": 60000
+            }
+        ],
+        "input": [
+            {
+                "id": "goodos",
+                "type": "PrefixScript",
+                "prefix": "goodos",
+                "space": true,
+                "args": "Required",
+                "script": "src/goodos.js",
+                "debounce": 100,
+                "connections": ["copy-user"]
+            },
+            {
+                "id": "goodos",
+                "type": "PrefixScript",
+                "prefix": "gg",
+                "space": true,
+                "args": "Required",
+                "script": "src/goodos.js",
+                "debounce": 100,
+                "connections": ["copy-user"]
+            },
+            {
+                "id": "goodos-conf",
+                "type": "PrefixScript",
+                "prefix": "gconf",
+                "space": true,
+                "args": "Required",
+                "script": "src/goodos-conf.js",
+                "debounce": 100,
+                "connections": ["set-user"]
+            },
+            {
+                "id": "write-goodos",
+                "type": "RootScript",
+                "script": "src/write-goodos.js",
+                "connections": ["send-goodos"]
+            }
+        ],
+        "output": [
+            {
+                "id": "copy-user",
+                "type": "UserScript",
+                "script": "src/save-user.js",
+                "connections": ["write-goodos"]
+            },
+            {
+                "id": "set-user",
+                "type": "UserScript",
+                "script": "src/set-user.js"
+            },
+            {
+                "id": "send-goodos",
+                "type": "UserScript",
+                "script": "src/send-goodos.js",
+                "connections": ["notify-goodos"]
+            },
+            {
+                "id": "notify-goodos",
+                "type": "SendNotification",
+                "title": "Goodos",
+                "message": "{value}"
+            }
         ]
-      },
-      {
-        "id": "hello",
-        "type": "Keyword",
-        "keyword": "hello",
-        "title": "Hello!",
-        "subtitle": "Please type your name!",
-        "icon": "fa-hand-spock-o",
-        "connections": ["GoHome"]
-      },
-      {
-        "id": "hello-name",
-        "type": "PrefixScript",
-        "prefix": "hello",
-        "space": true,
-        "args": "Required",
-        "script": "src/hello.js",
-        "connections": ["GoHome"]
-      }
-    ],
-    "output": [
-      {
-        "id": "GoHome",
-        "type": "OpenInBrowser",
-        "url": "https://github.com/tinytacoteam/zazu-template"
-      }
-    ]
-  }
+    }
 }
